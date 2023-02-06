@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TankMovement : MonoBehaviour
 {
+
+    /* variables */
     [Header("Movement")]
     public float moveSpeed;
 
@@ -28,10 +30,10 @@ public class TankMovement : MonoBehaviour
     //Update is called once per frame
     void Update()
     {
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
+        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround); // used to check if we are on the ground
         PlayerInput();
 
-        if (grounded)
+        if (grounded) // apply friction if we are on the ground
             rigidBody.drag = groundDrag;
         else
             rigidBody.drag = 0;
@@ -54,20 +56,20 @@ public class TankMovement : MonoBehaviour
     private void MovePlayer()
     {
         //calculate movement direction
-        moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
+        moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput; // get tank's forward and right orientation and combine them to move tank in specified direction
 
-        rigidBody.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+        rigidBody.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force); // apply the calculate force
     }
 
     private void SpeedControl()
     {
-        Vector3 flatVel = new Vector3(rigidBody.velocity.x, 0f, rigidBody.velocity.z);
+        Vector3 flatVel = new Vector3(rigidBody.velocity.x, 0f, rigidBody.velocity.z); // default velocity of the tank
 
         //limit velocity if needed
 
-        if(flatVel.magnitude > moveSpeed)
+        if(flatVel.magnitude > moveSpeed) // if the tanks velocity is greater than its set movement speed
         {
-            Vector3 limitedVel = flatVel.normalized * moveSpeed;
+            Vector3 limitedVel = flatVel.normalized * moveSpeed; // adjust tank speed to match move speed
             rigidBody.velocity = new Vector3(limitedVel.x, rigidBody.velocity.y, limitedVel.z);
         }
 
