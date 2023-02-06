@@ -4,15 +4,32 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+
+    /*variables */
     public float bulletLife = 3f;
+    public float bulletDamage = 5f;
+
     
-    void Awake()
+    
+    void Awake() // object lifetime
     {
         Destroy(gameObject, bulletLife);
     }
-    void OnCollisionEnter(Collision collision)
+
+    void OnTriggerEnter(Collider other) // when we hit something
     {
-        //Destroy(collision.gameObject);
-        //Destroy(gameObject);
+        DealDamage(other.gameObject);
+        Debug.Log("Hit");
+        Destroy(gameObject);
+
+    }
+
+    public void DealDamage(GameObject target) // deals damage to a gameobject
+    {
+        var HealthManager = target.GetComponent<HealthManager>(); 
+        if (HealthManager != null) // does the object have a health manager
+        {
+            HealthManager.TakeDamage(bulletDamage); // if it does subtract its health
+        }
     }
 }
