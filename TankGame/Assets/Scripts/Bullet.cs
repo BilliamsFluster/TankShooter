@@ -16,7 +16,7 @@ public class Bullet : MonoBehaviour
         Destroy(gameObject, bulletLife); // destroy bullet after 
     }
 
-    void OnTriggerEnter(Collider other) // when we hit something
+    void OnCollisionEnter(Collision other) // when we hit something
     {
         DealDamage(other.gameObject);
         Debug.Log("Hit");
