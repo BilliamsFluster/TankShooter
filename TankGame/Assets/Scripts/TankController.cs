@@ -7,12 +7,8 @@ using UnityEngine;
 public class TankController : Controller
 {
 
-    [Header("References")]
-    private Transform orientation;
-    private Transform player;
-    private Transform playerObj;
-    private Rigidbody rigidBody;
-    private float rotationSpeed;
+   
+    
 
   
 

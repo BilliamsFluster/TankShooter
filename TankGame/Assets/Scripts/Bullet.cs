@@ -13,7 +13,7 @@ public class Bullet : MonoBehaviour
     
     void Awake() // object lifetime
     {
-        Destroy(gameObject, bulletLife);
+        Destroy(gameObject, bulletLife); // destroy bullet after 
     }
 
     void OnTriggerEnter(Collider other) // when we hit something

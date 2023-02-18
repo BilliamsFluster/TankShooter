@@ -59,8 +59,8 @@ public class TankMovement : MonoBehaviour
         //calculate movement direction
         //moveDirection = orientation.forward * verticalInput; // get tank's forward and right orientation and combine them to move tank in specified direction
 
-        rigidBody.AddForce(rigidBody.transform.forward * moveSpeed * 10f * verticalInput, ForceMode.Force); // apply the calculate force
-        rigidBody.transform.Rotate(Vector3.up, rotationSpeed * horizontalInput);
+        rigidBody.AddForce(rigidBody.transform.forward * (moveSpeed * 10f) * (verticalInput * Time.deltaTime), ForceMode.Force); // apply the calculate force
+        rigidBody.transform.Rotate(Vector3.up, (rotationSpeed * horizontalInput) * Time.deltaTime); // att rotation to the tank based on horizontal input
     }
 
     private void SpeedControl()
@@ -72,7 +72,7 @@ public class TankMovement : MonoBehaviour
         if(flatVel.magnitude > moveSpeed) // if the tanks velocity is greater than its set movement speed
         {
             Vector3 limitedVel = flatVel.normalized * moveSpeed; // adjust tank speed to match move speed
-            rigidBody.velocity = new Vector3(limitedVel.x, rigidBody.velocity.y, limitedVel.z);
+            rigidBody.velocity = new Vector3(limitedVel.x, rigidBody.velocity.y, limitedVel.z); // limit the current velocity of the tank to the desired velocity set 
         }
 
     }
