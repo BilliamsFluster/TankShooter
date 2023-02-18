@@ -31,7 +31,8 @@ public class Gun : MonoBehaviour
         }
         lastShot = Time.time; // reset the timer
         var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation); // spawn bullet
-        bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed; // give the bullet some forward velocity
+        //bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed; // give the bullet some forward velocity
+        bullet.GetComponent<Rigidbody>().AddForce(bulletSpawnPoint.forward * bulletSpeed, ForceMode.Impulse);
     }
 
     

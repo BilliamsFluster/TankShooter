@@ -2,23 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-[System.Serializable]
-public abstract class Controller : MonoBehaviour
+public class TankPawn : Pawn
 {
-    [HideInInspector]
-    public Pawn pawn;
+
+   
+
     // Start is called before the first frame update
-    public virtual void Start()
+    public override void Start()
     {
+        base.Start();
         
     }
 
     // Update is called once per frame
-    public virtual void Update()
+    public override void Update()
     {
-        
+        base.Update(); 
     }
-
-   
 }

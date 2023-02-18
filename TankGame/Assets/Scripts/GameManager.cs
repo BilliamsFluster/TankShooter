@@ -6,31 +6,54 @@ public class GameManager : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    public static GameManager Instance;
-    public GameObject Tank;
-    public Transform TankTransform;
+    public static GameManager instance;
+    public GameObject playerController;
+    public GameObject tank;
+    public Transform playerSpawnTransform;
+    public List<TankController> players;
+  
 
     void Awake()
     {
-        if(Instance == null)
+        if(instance == null)
         {
-            Instance = this;
+            instance = this;
+            DontDestroyOnLoad(gameObject);
 
         }
         else
         {
             Destroy(gameObject);
         }
-        Instantiate(Tank, TankTransform.position, Quaternion.identity);
+
+        players = new List<TankController>();
+        
     }
     void Start()
     {
-        
+        SpawnPlayer();
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public void SpawnPlayer()
+    {
+       GameObject newPlayerControllerObj =  Instantiate(playerController, playerSpawnTransform.position, Quaternion.identity);
+       GameObject newPawnObj = Instantiate(tank, playerSpawnTransform.position, Quaternion.identity);
+
+       Controller newController = newPlayerControllerObj.GetComponent<Controller>();
+       
+        Pawn newPawn = newPawnObj.GetComponent<Pawn>();
+        
+
+
+       newController.pawn = newPawn;
+
+
+
     }
 }

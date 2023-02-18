@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-[System.Serializable]
-public abstract class Controller : MonoBehaviour
+public abstract class Pawn : MonoBehaviour
 {
-    [HideInInspector]
-    public Pawn pawn;
+    public Transform orientation;
+    public Transform player;
+    public Transform playerObj;
+    public Rigidbody rigidBody;
+    public float rotationSpeed;
+
     // Start is called before the first frame update
     public virtual void Start()
     {
@@ -19,6 +21,4 @@ public abstract class Controller : MonoBehaviour
     {
         
     }
-
-   
 }
