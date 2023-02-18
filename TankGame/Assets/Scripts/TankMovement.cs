@@ -8,6 +8,7 @@ public class TankMovement : MonoBehaviour
     /* variables */
     [Header("Movement")]
     public float moveSpeed;
+    public float rotationSpeed;
 
     public float groundDrag;
 
@@ -56,9 +57,10 @@ public class TankMovement : MonoBehaviour
     private void MovePlayer()
     {
         //calculate movement direction
-        moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput; // get tank's forward and right orientation and combine them to move tank in specified direction
+        //moveDirection = orientation.forward * verticalInput; // get tank's forward and right orientation and combine them to move tank in specified direction
 
-        rigidBody.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force); // apply the calculate force
+        rigidBody.AddForce(rigidBody.transform.forward * moveSpeed * 10f * verticalInput, ForceMode.Force); // apply the calculate force
+        rigidBody.transform.Rotate(Vector3.up, rotationSpeed * horizontalInput);
     }
 
     private void SpeedControl()
