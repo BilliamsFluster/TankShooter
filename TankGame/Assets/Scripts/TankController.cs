@@ -7,10 +7,6 @@ using UnityEngine;
 public class TankController : Controller
 {
 
-   
-    
-
-  
 
     // Start is called before the first frame update
     public override void Start() 

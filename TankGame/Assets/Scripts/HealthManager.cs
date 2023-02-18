@@ -14,7 +14,7 @@ public class HealthManager : MonoBehaviour
             health = 0;
             Death();
             Debug.Log("Object Dead");
-            Destroy(gameObject);
+           
 
         }
         else
@@ -26,6 +26,6 @@ public class HealthManager : MonoBehaviour
 
     public void Death()
     {
-
+        Destroy(gameObject);
     }
 }

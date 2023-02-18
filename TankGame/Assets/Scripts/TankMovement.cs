@@ -60,7 +60,7 @@ public class TankMovement : MonoBehaviour
         //moveDirection = orientation.forward * verticalInput; // get tank's forward and right orientation and combine them to move tank in specified direction
 
         rigidBody.AddForce(rigidBody.transform.forward * (moveSpeed * 10f) * (verticalInput * Time.deltaTime), ForceMode.Force); // apply the calculate force
-        rigidBody.transform.Rotate(Vector3.up, (rotationSpeed * horizontalInput) * Time.deltaTime); // att rotation to the tank based on horizontal input
+        rigidBody.transform.Rotate(Vector3.up, (rotationSpeed * horizontalInput) * Time.deltaTime); // at rotation to the tank based on horizontal input
     }
 
     private void SpeedControl()
