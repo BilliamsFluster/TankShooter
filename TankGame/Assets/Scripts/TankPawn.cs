@@ -4,19 +4,28 @@ using UnityEngine;
 
 public class TankPawn : Pawn
 {
+    public KeyCode fireKey = KeyCode.Space;
 
-   
-
+    private GameObject GunObj;
+    private Gun gun; 
     // Start is called before the first frame update
     public override void Start()
     {
         base.Start();
-        
+        GunObj = GameObject.Find("TankObj");
+        gun = GunObj.GetComponent<Gun>();
     }
 
     // Update is called once per frame
     public override void Update()
     {
         base.Update(); 
+
+        if (Input.GetKeyDown(fireKey)) // check if we are pressing fire key
+        {
+            gun.ShootBullet();
+        }
+
+
     }
 }

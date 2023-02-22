@@ -11,7 +11,10 @@ public class GameManager : MonoBehaviour
     public GameObject tank;
     public Transform playerSpawnTransform;
     public List<TankController> players;
-  
+    public List<AIController> enemies;
+
+    [HideInInspector]
+    public GameObject newPawnObj;
 
     void Awake()
     {
@@ -27,6 +30,11 @@ public class GameManager : MonoBehaviour
         }
 
         players = new List<TankController>();
+        enemies = new List<AIController>();
+        //for(enemy: enemies)
+        //{
+        //    enemy.player = 
+        //}
         
     }
     void Start()
@@ -43,13 +51,11 @@ public class GameManager : MonoBehaviour
     public void SpawnPlayer()
     {
        GameObject newPlayerControllerObj =  Instantiate(playerController, playerSpawnTransform.position, Quaternion.identity);
-       GameObject newPawnObj = Instantiate(tank, playerSpawnTransform.position, Quaternion.identity);
+       newPawnObj = Instantiate(tank, playerSpawnTransform.position, Quaternion.identity);
 
        Controller newController = newPlayerControllerObj.GetComponent<Controller>();
        
-        Pawn newPawn = newPawnObj.GetComponent<Pawn>();
-        
-
+       Pawn newPawn = newPawnObj.GetComponent<Pawn>();
 
        newController.pawn = newPawn;
 
