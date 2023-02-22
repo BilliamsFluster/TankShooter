@@ -9,7 +9,6 @@ public class Gun : MonoBehaviour
     public Transform bulletSpawnPoint;
     public GameObject bulletPrefab;
     public float bulletSpeed = 10f;
-    public KeyCode fireKey = KeyCode.Space;
     public float coolDownTime = 1f;
     private float lastShot;
     
@@ -17,13 +16,10 @@ public class Gun : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyDown(fireKey)) // check if we are pressing fire key
-        {
-            ShootBullet();
-        }
+      
     }
 
-    void ShootBullet()
+    public void ShootBullet()
     {
         if (Time.time - lastShot < coolDownTime) // if we cant shoot than just return 
         {

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8716352181165850198}
   - component: {fileID: 6850612102735301276}
   - component: {fileID: 9064945955062905678}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: TankObj
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -103,7 +103,6 @@ MonoBehaviour:
   bulletSpawnPoint: {fileID: 9119213372925028628}
   bulletPrefab: {fileID: 7418692315733629396, guid: c65f0647579b25641bd425ca0f054006, type: 3}
   bulletSpeed: 50
-  fireKey: 32
   coolDownTime: 1
 --- !u!1 &5728022245716184119
 GameObject:
@@ -237,9 +236,10 @@ GameObject:
   - component: {fileID: 9119213372537678741}
   - component: {fileID: 210440491637746216}
   - component: {fileID: 270155245996048018}
-  m_Layer: 0
+  - component: {fileID: 7053860941462056620}
+  m_Layer: 7
   m_Name: TankActor
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -328,6 +328,21 @@ MonoBehaviour:
   playerObj: {fileID: 5717724028888183283}
   rigidBody: {fileID: 9119213372537678746}
   rotationSpeed: 7
+  fireKey: 32
+--- !u!114 &7053860941462056620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9119213372537678745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6adc9f62e0d4c7d489dd7f1792ac4959, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 10
+  maxHealth: 100
 --- !u!1 &9119213372925028635
 GameObject:
   m_ObjectHideFlags: 0
