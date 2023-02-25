@@ -9,7 +9,7 @@ public class TankController : Controller
 
 
     // Start is called before the first frame update
-    public override void Start() 
+    protected override void Start() 
     {
         
         Cursor.lockState = CursorLockMode.Locked; // hide the cursor
@@ -38,11 +38,15 @@ public class TankController : Controller
     }
 
     // Update is called once per frame
-    public override void Update() 
+    protected override void Update() 
     {
         
         base.Update();
        
+    }
+    protected override void Awake()
+    {
+        base.Awake();
     }
 
 }

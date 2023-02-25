@@ -8,17 +8,34 @@ public abstract class Controller : MonoBehaviour
 {
     [HideInInspector]
     public Pawn pawn;
+    public AudioClip impactSound;
+    public AudioClip shotSound;
+    public static AudioSource impactSource;
+    public static AudioSource shotSource;
     // Start is called before the first frame update
-    public virtual void Start()
+    protected virtual void Start()
     {
         
+        
+
+    }
+    protected virtual void Awake()
+    {
+        
+
+
+        
+
+
+        Debug.Log(impactSound.ToString());
     }
 
     // Update is called once per frame
-    public virtual void Update()
+    protected virtual void Update()
     {
         
     }
 
+    
    
 }

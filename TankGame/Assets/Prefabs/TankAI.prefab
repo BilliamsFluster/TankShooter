@@ -50,7 +50,7 @@ GameObject:
   - component: {fileID: 43125155671399257}
   m_Layer: 0
   m_Name: TankAI
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -157,6 +157,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2adb067a3a736741b29b6448469d6bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pawn: {fileID: 0}
+  impactSound: {fileID: 0}
+  shotSound: {fileID: 0}
   agent: {fileID: -5600611684776780216}
   player: {fileID: 9119213372537678745, guid: c07baf6f0acda5248abac66bb8861bb2, type: 3}
   gun: {fileID: 0}
@@ -169,10 +172,13 @@ MonoBehaviour:
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 10
   timeBetweenAttacks: 0.5
+  passiveAttackTime: 1
+  aggressiveAttackTime: 0.5
   sightRange: 20
   attackRange: 12
   playerInSightRange: 0
   playerInAttackRange: 0
+  isAggressive: 0
 --- !u!114 &370854455104563190
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -185,7 +191,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6adc9f62e0d4c7d489dd7f1792ac4959, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 20
+  health: 55
   maxHealth: 100
 --- !u!54 &8577108393164384049
 Rigidbody:
@@ -232,5 +238,4 @@ MonoBehaviour:
   bulletSpawnPoint: {fileID: 1399016732148868936}
   bulletPrefab: {fileID: 7418692315733629396, guid: c65f0647579b25641bd425ca0f054006, type: 3}
   bulletSpeed: 10
-  fireKey: 32
   coolDownTime: 1

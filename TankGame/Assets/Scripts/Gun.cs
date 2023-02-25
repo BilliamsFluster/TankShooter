@@ -13,7 +13,15 @@ public class Gun : MonoBehaviour
     private float lastShot;
     
     
-
+    void Start()
+    {
+        
+        
+    }
+    void Awake()
+    {
+        
+    }
     void Update()
     {
       
@@ -21,13 +29,19 @@ public class Gun : MonoBehaviour
 
     public void ShootBullet()
     {
-        if (Time.time - lastShot < coolDownTime) // if we cant shoot than just return 
+        if(gameObject.tag != "Enemy")
         {
-            return;
+            if (Time.time - lastShot < coolDownTime) // if we cant shoot than just return 
+            {
+                return;
+            }
+            lastShot = Time.time; // reset the timer
         }
-        lastShot = Time.time; // reset the timer
         var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation); // spawn bullet
         bullet.GetComponent<Rigidbody>().AddForce(bulletSpawnPoint.forward * bulletSpeed, ForceMode.Impulse); // add force to the bullet to update its position.
+        
+
+        
     }
 
     

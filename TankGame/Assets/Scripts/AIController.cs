@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class AIController : MonoBehaviour
+public class AIController : Controller
 {
     public NavMeshAgent agent;
 
@@ -19,18 +19,22 @@ public class AIController : MonoBehaviour
     bool walkPointSet;
     public float walkPointRange;
 
-    //Attacking
-    public float timeBetweenAttacks;
+    //Attacking 
+    private float timeBetweenAttacks;
+    public float passiveAttackTime;
+    public float aggressiveAttackTime;
+    public float timeBeingAggressive;
     bool alreadyAttacked;
 
     //States
     public float sightRange, attackRange;
-    public bool playerInSightRange, playerInAttackRange;
+    public bool playerInSightRange, playerInAttackRange, isAggressive = false;
 
-    private void Awake()
+    protected override void Awake()
     {
        
         agent = GetComponent<NavMeshAgent>();
+        base.Awake();
         
 
     }
@@ -56,7 +60,7 @@ public class AIController : MonoBehaviour
         float randomRangeZ = Random.Range(-walkPointRange, walkPointRange);
         float randomRangeX = Random.Range(-walkPointRange, walkPointRange);
 
-        walkPoint = new Vector3(transform.position.x + randomRangeX, transform.position.y, transform.position.z + randomRangeZ);
+        walkPoint = new Vector3(transform.position.x + randomRangeX, transform.position.y, transform.position.z + randomRangeZ); // set walk point to the result of the random generated position
 
         if(Physics.Raycast(walkPoint,-transform.up,2f,whatIsground))
         {
@@ -68,7 +72,7 @@ public class AIController : MonoBehaviour
     {
         if(player != null)
         {
-            agent.SetDestination(player.transform.position);
+            agent.SetDestination(player.transform.position); // set destination to player location
         }
         
         
@@ -85,6 +89,7 @@ public class AIController : MonoBehaviour
            if(gun != null)
             {
                 gun.ShootBullet();
+                GameManager.instance.PlayTankShotSound(); // play a shot sound
             }
             
             alreadyAttacked = true;
@@ -101,10 +106,18 @@ public class AIController : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
         Invoke(nameof(UpdateComponents), 1f);
+
+        passiveAttackTime = 1f;
+        aggressiveAttackTime = 0.5f;
+        timeBeingAggressive = 6f;
+
+        timeBetweenAttacks = passiveAttackTime;
         
+
+
     }
     void UpdateComponents()
     {
@@ -119,6 +132,20 @@ public class AIController : MonoBehaviour
             gun = GunObj.GetComponent<Gun>();
 
         }
+    }
+
+    public void Aggressive()
+    {
+
+       timeBetweenAttacks = aggressiveAttackTime; // shorten attack time
+       Invoke(nameof(Passive), timeBeingAggressive); // aggression cooldown
+        
+       
+    }
+    public void Passive()
+    {
+        timeBetweenAttacks = passiveAttackTime;
+        
     }
    
 
@@ -135,17 +162,23 @@ public class AIController : MonoBehaviour
 
 
     // Update is called once per frame
-    private void Update()
+    protected override void Update()
     {
-        playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
-        playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
+        playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer); // based on sight sphere
+        playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer); // based on attack sphere
 
-        if (!playerInAttackRange && !playerInSightRange) Patroling();
-        if (!playerInAttackRange && playerInSightRange) ChasePlayer();
-        if (playerInAttackRange && playerInSightRange) AttackPlayer();
+        if (!playerInAttackRange && !playerInSightRange)
+        {
+            Patroling(); // Patroling state
+            Passive(); // passive state
+        }
+        if (!playerInAttackRange && playerInSightRange) ChasePlayer(); // Chasing state
+        if (playerInAttackRange && playerInSightRange) AttackPlayer(); // attacking state
+        
+        
 
     }
-
+    // debug function
     private void OnDrawGizmos()
     {
         
