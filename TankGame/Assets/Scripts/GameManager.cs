@@ -16,6 +16,13 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public GameObject newPawnObj;
 
+
+    /* Sounds */
+    public AudioClip impactSound;
+    public AudioClip shotSound;
+    public  AudioSource impactSource;
+    public  AudioSource shotSource;
+
     void Awake()
     {
         if(instance == null)
@@ -31,11 +38,15 @@ public class GameManager : MonoBehaviour
 
         players = new List<TankController>();
         enemies = new List<AIController>();
-        //for(enemy: enemies)
-        //{
-        //    enemy.player = 
-        //}
-        
+
+        //sounds
+        impactSource = (AudioSource)gameObject.AddComponent<AudioSource>();
+        impactSource.clip = impactSound;
+
+        shotSource = (AudioSource)gameObject.AddComponent<AudioSource>();
+        shotSource.clip = shotSound;
+
+
     }
     void Start()
     {
@@ -62,4 +73,26 @@ public class GameManager : MonoBehaviour
 
 
     }
+
+
+    public void PlayTankImpactSound()
+    {
+        if (impactSound != null)
+        {
+            impactSource.PlayOneShot(impactSound);
+            Debug.Log(impactSound.ToString());
+        }
+    }
+
+    public void PlayTankShotSound()
+    {
+        if (shotSound != null)
+        {
+            shotSource.PlayOneShot(shotSound);
+            Debug.Log(shotSound.ToString());
+
+        }
+
+    }
+
 }

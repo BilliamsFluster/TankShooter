@@ -812,6 +812,10 @@ MonoBehaviour:
   players: []
   enemies: []
   newPawnObj: {fileID: 0}
+  impactSound: {fileID: 8300000, guid: 6bcf28e0b710061448fa7ed59c8d421e, type: 3}
+  shotSound: {fileID: 8300000, guid: cf0c82156474f9e44bf76b6c188aa823, type: 3}
+  impactSource: {fileID: 0}
+  shotSource: {fileID: 0}
 --- !u!1 &1903929740 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8718516344623284234, guid: 4e6f32338b95e4044bd70ae45780578c, type: 3}
@@ -859,7 +863,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 370854455104563190, guid: 4e6f32338b95e4044bd70ae45780578c, type: 3}
       propertyPath: health
-      value: 10
+      value: 55
       objectReference: {fileID: 0}
     - target: {fileID: 8337769024608082608, guid: 4e6f32338b95e4044bd70ae45780578c, type: 3}
       propertyPath: m_RootOrder
