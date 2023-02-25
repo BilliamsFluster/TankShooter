@@ -10,14 +10,20 @@ public class AIController : Controller
     public GameObject player;
     private GameObject GunObj;
     public Gun gun;
+    Vector3 bulletSoundLocation = Vector3.zero;
 
-    public LayerMask whatIsground, whatIsPlayer;
+    public LayerMask whatIsground, whatIsPlayer, whatIsSound;
 
     public Vector3 walkPoint;
 
     //Patroling 
     bool walkPointSet;
     public float walkPointRange;
+    public List<GameObject> walkpoints;
+    public float walkSpeed = 5f;
+    public bool usePatrolPath;
+    int walkpointIndex = 0;
+    public bool canLoop = true;
 
     //Attacking 
     private float timeBetweenAttacks;
@@ -27,32 +33,72 @@ public class AIController : Controller
     bool alreadyAttacked;
 
     //States
-    public float sightRange, attackRange;
-    public bool playerInSightRange, playerInAttackRange, isAggressive = false;
+    public float sightRange, attackRange, hearingRange;
+    public bool playerInSightRange, playerInAttackRange, soundInHearingRange, InvestigatingSound, isAggressive = false;
+
 
     protected override void Awake()
     {
        
         agent = GetComponent<NavMeshAgent>();
         base.Awake();
-        
 
+
+    }
+    void RandomPatrol()
+    {
+        if (!walkPointSet) SearchWalkPoint(); // find a walkpoint
+        if (walkPointSet)
+        {
+            agent.SetDestination(walkPoint); // set location to move towards to a random walkpoint
+
+        }
+
+        Vector3 distanceToWalkPoint = transform.position - walkPoint; // did we reach the walkpoint
+
+        if (distanceToWalkPoint.magnitude <= 2f)
+        {
+            walkPointSet = false; // find another walkpoint
+        }
+    }
+    void PathPatrol()
+    {
+
+
+        Vector3 destination = walkpoints[walkpointIndex].transform.position; // get the current index of the walkpoint current position
+        agent.SetDestination(destination); // set destination to current index
+
+        float distance = Vector3.Distance(transform.position, destination); // did we reach the current index position 
+        if (distance <= 1f) // if we did and we have a next valid index than increment the index
+        {
+            if (walkpointIndex < walkpoints.Count - 1)
+            {
+                walkpointIndex++;
+                
+            }
+            else
+            {
+                if (canLoop) // if we reached the last index and can loop 
+                {
+                    walkpointIndex = 0;
+                }
+            }
+
+        }
     }
     private void Patroling()
     {
-        if (!walkPointSet) SearchWalkPoint();
-        if(walkPointSet)
+        //options for patroling
+        if (usePatrolPath)
         {
-            agent.SetDestination(walkPoint);
-
+            PathPatrol(); // patrol on a path
         }
-
-        Vector3 distanceToWalkPoint = transform.position - walkPoint;
-
-        if(distanceToWalkPoint.magnitude <= 1f)
+        else
         {
-            walkPointSet = false;
+            RandomPatrol(); // use random points to patrol
         }
+        
+
     }
     private void SearchWalkPoint()
     {
@@ -82,6 +128,7 @@ public class AIController : Controller
     {
         //enemy doesnt move
         agent.SetDestination(transform.position);
+        InvestigatingSound = false;
 
         transform.LookAt(player.transform.position);
         if(!alreadyAttacked)
@@ -89,7 +136,7 @@ public class AIController : Controller
            if(gun != null)
             {
                 gun.ShootBullet();
-                GameManager.instance.PlayTankShotSound(); // play a shot sound
+               
             }
             
             alreadyAttacked = true;
@@ -114,8 +161,10 @@ public class AIController : Controller
         aggressiveAttackTime = 0.5f;
         timeBeingAggressive = 6f;
 
-        timeBetweenAttacks = passiveAttackTime;
-        
+        timeBetweenAttacks = passiveAttackTime; // normal attack time
+        InvestigatingSound = false; // not investigating sound
+
+
 
 
     }
@@ -147,7 +196,41 @@ public class AIController : Controller
         timeBetweenAttacks = passiveAttackTime;
         
     }
-   
+    void HeardSound()
+    {
+        if(!playerInAttackRange && !playerInSightRange)
+        {
+            
+            InvestigatingSound = true;
+            Collider[] colliders = Physics.OverlapSphere(transform.position, hearingRange); // get all colliders within sphere
+            foreach (Collider collider in colliders)
+            {
+                if (collider.gameObject.tag == "Bullet")
+                {
+                    
+                    Bullet bulletObj = collider.gameObject.GetComponent<Bullet>(); // cast the current hit collider game object to the bullet
+                    if (bulletObj !=null)
+                    {
+                        bulletSoundLocation = bulletObj.startLocation; // get the bullet location
+                        agent.SetDestination(bulletSoundLocation); // set the destination to that bullet location
+                        
+                    }
+                    break;
+                }
+            }
+            var DistanceFromSound = Vector3.Distance(transform.position, bulletSoundLocation);
+
+            if (DistanceFromSound <= 1) // did we finish traveling to the bullet heard location
+            {
+                InvestigatingSound = false; // if we did than we dont need to investigate
+            }
+        }
+        else
+        {
+            InvestigatingSound = false;
+        }
+       
+    }
 
     public void OnDestroy()
     {
@@ -166,12 +249,27 @@ public class AIController : Controller
     {
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer); // based on sight sphere
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer); // based on attack sphere
+        soundInHearingRange = Physics.CheckSphere(transform.position, hearingRange, whatIsSound); // based on hearing sphere
 
-        if (!playerInAttackRange && !playerInSightRange)
+        
+        if(!InvestigatingSound)
         {
-            Patroling(); // Patroling state
-            Passive(); // passive state
+            if (!playerInAttackRange && !playerInSightRange)
+            {
+                Patroling(); // Patroling state
+                Passive(); // passive state
+            }
         }
+        if(soundInHearingRange) // investigating state
+        {
+            HeardSound();
+            
+        }
+        if(InvestigatingSound) // investigating state
+        {
+            HeardSound();
+        }
+
         if (!playerInAttackRange && playerInSightRange) ChasePlayer(); // Chasing state
         if (playerInAttackRange && playerInSightRange) AttackPlayer(); // attacking state
         
@@ -184,8 +282,11 @@ public class AIController : Controller
         
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
-
         Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, hearingRange);
+
+        Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, sightRange);
     }
+    
 }

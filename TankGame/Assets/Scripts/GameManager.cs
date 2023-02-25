@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
     public AudioClip shotSound;
     public  AudioSource impactSource;
     public  AudioSource shotSource;
+    public float shotSoundRange = 25f;
+    public float impactSoundRange = 10f;
 
     void Awake()
     {
@@ -80,7 +82,9 @@ public class GameManager : MonoBehaviour
         if (impactSound != null)
         {
             impactSource.PlayOneShot(impactSound);
+
             Debug.Log(impactSound.ToString());
+            
         }
     }
 
@@ -89,6 +93,8 @@ public class GameManager : MonoBehaviour
         if (shotSound != null)
         {
             shotSource.PlayOneShot(shotSound);
+            
+            
             Debug.Log(shotSound.ToString());
 
         }

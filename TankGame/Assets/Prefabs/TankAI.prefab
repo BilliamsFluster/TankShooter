@@ -158,8 +158,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pawn: {fileID: 0}
-  impactSound: {fileID: 0}
-  shotSound: {fileID: 0}
   agent: {fileID: -5600611684776780216}
   player: {fileID: 9119213372537678745, guid: c07baf6f0acda5248abac66bb8861bb2, type: 3}
   gun: {fileID: 0}
@@ -169,15 +167,27 @@ MonoBehaviour:
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 128
+  whatIsSound:
+    serializedVersion: 2
+    m_Bits: 256
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 10
-  timeBetweenAttacks: 0.5
+  walkpoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  walkSpeed: 500
+  usePatrolPath: 1
+  canLoop: 1
   passiveAttackTime: 1
   aggressiveAttackTime: 0.5
+  timeBeingAggressive: 0
   sightRange: 20
   attackRange: 12
+  hearingRange: 40
   playerInSightRange: 0
   playerInAttackRange: 0
+  soundInHearingRange: 0
   isAggressive: 0
 --- !u!114 &370854455104563190
 MonoBehaviour:
