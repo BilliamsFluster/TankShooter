@@ -8,7 +8,14 @@ public class TankMovement : MonoBehaviour
     /* variables */
     [Header("Movement")]
     public float moveSpeed;
-    public float rotationSpeed;
+    public float rotationSpeed = 50f;
+    public float maxRotationSpeed = 50f;
+    public float minRotationSpeed = 20f;
+    float collisionRadius = 2;
+    public string detectedObjectForRotationMod;
+    public LayerMask collisionFilter;
+    float speedFact = 0;
+
 
     public float groundDrag;
 
@@ -32,6 +39,19 @@ public class TankMovement : MonoBehaviour
     void Update()
     {
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround); // used to check if we are on the ground
+        bool hasCollided = Physics.CheckSphere(transform.position, collisionRadius, collisionFilter);
+        
+        if (hasCollided)
+        {
+            RotationControl(true);
+            
+        }
+        else
+        {
+            RotationControl(false);
+        }
+       
+        
         PlayerInput();
 
         if (grounded) // apply friction if we are on the ground
@@ -41,6 +61,43 @@ public class TankMovement : MonoBehaviour
 
         SpeedControl();
 
+
+
+
+    }
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, collisionRadius);
+    }
+    public void RotationControl(bool SeeObject)
+    {
+        
+        if(SeeObject)
+        {
+            Collider[] colliders = Physics.OverlapSphere(transform.position, collisionRadius);
+
+            foreach (Collider collider in colliders)
+            {
+                Debug.Log(collider.gameObject.layer.ToString());
+                if (collider.gameObject.tag == detectedObjectForRotationMod)
+                {
+
+                    Debug.Log("got layer");
+                    float distanceFromObject = Vector3.Distance(transform.position, collider.gameObject.transform.position);
+                    float speedFactor = (distanceFromObject / collisionRadius);
+                    speedFact = 1/speedFactor;
+                    rotationSpeed = Mathf.Lerp(maxRotationSpeed,minRotationSpeed, 1/speedFactor);  
+                }
+            }
+
+        }
+        else
+        {
+            speedFact = 0;
+            rotationSpeed = Mathf.Lerp(maxRotationSpeed, minRotationSpeed, speedFact);
+            
+        }
 
 
     }
@@ -56,9 +113,7 @@ public class TankMovement : MonoBehaviour
 
     private void MovePlayer()
     {
-        //calculate movement direction
-        //moveDirection = orientation.forward * verticalInput; // get tank's forward and right orientation and combine them to move tank in specified direction
-
+       
         rigidBody.AddForce(rigidBody.transform.forward * (moveSpeed * 10f) * (verticalInput * Time.deltaTime), ForceMode.Force); // apply the calculate force
         rigidBody.transform.Rotate(Vector3.up, (rotationSpeed * horizontalInput) * Time.deltaTime); // at rotation to the tank based on horizontal input
     }
