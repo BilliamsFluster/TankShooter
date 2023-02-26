@@ -306,6 +306,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 500
   rotationSpeed: 50
+  maxRotationSpeed: 50
+  minRotationSpeed: 20
+  detectedObjectForRotationMod: Obstacle
+  collisionFilter:
+    serializedVersion: 2
+    m_Bits: 512
+  speedFactorRange: 9
   groundDrag: 5
   playerHeight: 1
   whatIsGround:
@@ -357,8 +364,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pawn: {fileID: 0}
-  impactSound: {fileID: 0}
-  shotSound: {fileID: 0}
 --- !u!1 &9119213372925028635
 GameObject:
   m_ObjectHideFlags: 0
