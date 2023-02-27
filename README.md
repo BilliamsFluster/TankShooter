@@ -1,2 +1,2 @@
 # TankShooter
-Repo for Game Programming class tracking changes for a tank game
+Repo for construction of a tank shooter game using Unity. 
