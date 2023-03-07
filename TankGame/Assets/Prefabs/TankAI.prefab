@@ -48,6 +48,7 @@ GameObject:
   - component: {fileID: 8577108393164384049}
   - component: {fileID: 9156820319301360876}
   - component: {fileID: 43125155671399257}
+  - component: {fileID: 5684973512889056728}
   m_Layer: 0
   m_Name: TankAI
   m_TagString: Enemy
@@ -188,6 +189,7 @@ MonoBehaviour:
   playerInSightRange: 0
   playerInAttackRange: 0
   soundInHearingRange: 0
+  InvestigatingSound: 0
   isAggressive: 0
 --- !u!114 &370854455104563190
 MonoBehaviour:
@@ -249,3 +251,15 @@ MonoBehaviour:
   bulletPrefab: {fileID: 7418692315733629396, guid: c65f0647579b25641bd425ca0f054006, type: 3}
   bulletSpeed: 10
   coolDownTime: 1
+--- !u!114 &5684973512889056728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8718516344623284234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04d085e5842bc8b4a9153cf1d03b4793, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
