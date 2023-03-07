@@ -28,4 +28,17 @@ public class HealthManager : MonoBehaviour
     {
         Destroy(gameObject);
     }
+
+
+    public void Heal(float healthtoAdd)
+    {
+        if (health + healthtoAdd >= maxHealth)
+        {
+            health = maxHealth;
+        }
+        else
+        {
+            health += healthtoAdd;
+        }
+    }
 }
