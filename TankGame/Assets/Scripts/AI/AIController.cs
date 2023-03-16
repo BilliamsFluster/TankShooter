@@ -12,29 +12,31 @@ public class AIController : Controller
     public Gun gun;
     Vector3 bulletSoundLocation = Vector3.zero;
 
-    public LayerMask whatIsground, whatIsPlayer, whatIsSound;
+    public LayerMask whatIsground, whatIsPlayer, whatIsSound, whatIsFLee;
 
     public Vector3 walkPoint;
 
     //Patroling 
-    bool walkPointSet;
+    protected bool walkPointSet;
     public float walkPointRange;
     public List<GameObject> walkpoints;
     public float walkSpeed = 5f;
     public bool usePatrolPath;
     int walkpointIndex = 0;
     public bool canLoop = true;
+    protected bool fleeing = false;
+    
 
     //Attacking 
-    private float timeBetweenAttacks;
+    public float timeBetweenAttacks;
     public float passiveAttackTime;
     public float aggressiveAttackTime;
     public float timeBeingAggressive;
-    bool alreadyAttacked;
+    protected bool alreadyAttacked;
 
     //States
-    public float sightRange, attackRange, hearingRange;
-    public bool playerInSightRange, playerInAttackRange, soundInHearingRange, InvestigatingSound, isAggressive = false;
+    public float sightRange, attackRange, hearingRange, fleeRange;
+    public bool playerInSightRange, playerInAttackRange, soundInHearingRange, playerInFleeRange, InvestigatingSound, isAggressive = false;
 
 
     protected override void Awake()
@@ -64,29 +66,32 @@ public class AIController : Controller
     void PathPatrol()
     {
 
-
-        Vector3 destination = walkpoints[walkpointIndex].transform.position; // get the current index of the walkpoint current position
-        agent.SetDestination(destination); // set destination to current index
-
-        float distance = Vector3.Distance(transform.position, destination); // did we reach the current index position 
-        if (distance <= 1f) // if we did and we have a next valid index than increment the index
+        if(usePatrolPath)
         {
-            if (walkpointIndex < walkpoints.Count - 1)
-            {
-                walkpointIndex++;
-                
-            }
-            else
-            {
-                if (canLoop) // if we reached the last index and can loop 
-                {
-                    walkpointIndex = 0;
-                }
-            }
+            Vector3 destination = walkpoints[walkpointIndex].transform.position; // get the current index of the walkpoint current position
+            agent.SetDestination(destination); // set destination to current index
 
+            float distance = Vector3.Distance(transform.position, destination); // did we reach the current index position 
+            if (distance <= 1f) // if we did and we have a next valid index than increment the index
+            {
+                if (walkpointIndex < walkpoints.Count - 1)
+                {
+                    walkpointIndex++;
+
+                }
+                else
+                {
+                    if (canLoop) // if we reached the last index and can loop 
+                    {
+                        walkpointIndex = 0;
+                    }
+                }
+
+            }
         }
+        
     }
-    private void Patroling()
+    protected void Patroling()
     {
         //options for patroling
         if (usePatrolPath)
@@ -96,6 +101,7 @@ public class AIController : Controller
         else
         {
             RandomPatrol(); // use random points to patrol
+            
         }
         
 
@@ -108,13 +114,16 @@ public class AIController : Controller
 
         walkPoint = new Vector3(transform.position.x + randomRangeX, transform.position.y, transform.position.z + randomRangeZ); // set walk point to the result of the random generated position
 
-        if(Physics.Raycast(walkPoint,-transform.up,2f,whatIsground))
+        if(Physics.Raycast(walkPoint,-transform.up,10f,whatIsground))
         {
-            walkPointSet = true;
+           
+            
         }
+        walkPointSet = true;
+          
     }
 
-    private void ChasePlayer()
+    protected void ChasePlayer()
     {
         if(player != null)
         {
@@ -124,8 +133,9 @@ public class AIController : Controller
         
     }
 
-    private void AttackPlayer()
+    protected virtual void AttackPlayer()
     {
+        
         //enemy doesnt move
         agent.SetDestination(transform.position);
         InvestigatingSound = false;
@@ -143,7 +153,7 @@ public class AIController : Controller
             Invoke(nameof(ResetAttack), timeBetweenAttacks); // call the reset attack function after some specified time
         }
     }
-    private void ResetAttack()
+    protected void ResetAttack()
     {
         alreadyAttacked = false;
     }
@@ -177,8 +187,7 @@ public class AIController : Controller
                 GameManager.instance.enemies.Add(this); // add ai controller to list
             }
             player = GameManager.instance.newPawnObj;
-            GunObj = GameObject.Find("TankAI");
-            gun = GunObj.GetComponent<Gun>();
+            gun = GetComponent<Gun>();
 
         }
     }
@@ -196,9 +205,9 @@ public class AIController : Controller
         timeBetweenAttacks = passiveAttackTime;
         
     }
-    void HeardSound()
+    protected void HeardSound()
     {
-        if(!playerInAttackRange && !playerInSightRange)
+        if (!playerInAttackRange && !playerInSightRange)
         {
             
             InvestigatingSound = true;

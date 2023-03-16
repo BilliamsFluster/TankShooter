@@ -43,14 +43,14 @@ GameObject:
   - component: {fileID: 4907357158679123221}
   - component: {fileID: 7205363700119298527}
   - component: {fileID: -5600611684776780216}
-  - component: {fileID: 2081782455706499244}
   - component: {fileID: 370854455104563190}
   - component: {fileID: 8577108393164384049}
   - component: {fileID: 9156820319301360876}
   - component: {fileID: 43125155671399257}
   - component: {fileID: 5684973512889056728}
+  - component: {fileID: 747161075610603915}
   m_Layer: 0
-  m_Name: TankAI
+  m_Name: NormalAI
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -64,7 +64,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8718516344623284234}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 12.155397, y: 0.077, z: -8.65971}
+  m_LocalPosition: {x: 12.155397, y: 0.36, z: -8.65971}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -133,7 +133,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 8718516344623284234}
   m_Enabled: 1
   m_AgentTypeID: -1372625422
-  m_Radius: 0.9
+  m_Radius: 1
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -142,61 +142,10 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 1.05
-  m_BaseOffset: 0.97
+  m_Height: 1
+  m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &2081782455706499244
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8718516344623284234}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2adb067a3a736741b29b6448469d6bc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pawn: {fileID: 0}
-  agent: {fileID: -5600611684776780216}
-  player: {fileID: 9119213372537678745, guid: c07baf6f0acda5248abac66bb8861bb2, type: 3}
-  gun: {fileID: 0}
-  whatIsground:
-    serializedVersion: 2
-    m_Bits: 64
-  whatIsPlayer:
-    serializedVersion: 2
-    m_Bits: 128
-  whatIsSound:
-    serializedVersion: 2
-    m_Bits: 256
-  whatIsFLee:
-    serializedVersion: 2
-    m_Bits: 0
-  walkPoint: {x: 0, y: 0, z: 0}
-  walkPointRange: 10
-  walkpoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  walkSpeed: 500
-  usePatrolPath: 1
-  canLoop: 1
-  timeBetweenAttacks: 0
-  passiveAttackTime: 1
-  aggressiveAttackTime: 0.5
-  timeBeingAggressive: 0
-  sightRange: 20
-  attackRange: 12
-  hearingRange: 40
-  fleeRange: 0
-  playerInSightRange: 0
-  playerInAttackRange: 0
-  soundInHearingRange: 0
-  playerInFleeRange: 0
-  InvestigatingSound: 0
-  isAggressive: 0
 --- !u!114 &370854455104563190
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -255,7 +204,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletSpawnPoint: {fileID: 1399016732148868936}
   bulletPrefab: {fileID: 7418692315733629396, guid: c65f0647579b25641bd425ca0f054006, type: 3}
-  bulletSpeed: 10
+  bulletSpeed: 50
   coolDownTime: 1
 --- !u!114 &5684973512889056728
 MonoBehaviour:
@@ -269,3 +218,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04d085e5842bc8b4a9153cf1d03b4793, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &747161075610603915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8718516344623284234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38881783bba38e044974e2bb592c78de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pawn: {fileID: 0}
+  agent: {fileID: -5600611684776780216}
+  player: {fileID: 9119213372537678745, guid: c07baf6f0acda5248abac66bb8861bb2, type: 3}
+  gun: {fileID: 0}
+  whatIsground:
+    serializedVersion: 2
+    m_Bits: 64
+  whatIsPlayer:
+    serializedVersion: 2
+    m_Bits: 128
+  whatIsSound:
+    serializedVersion: 2
+    m_Bits: 256
+  whatIsFLee:
+    serializedVersion: 2
+    m_Bits: 0
+  walkPoint: {x: 0, y: 0, z: 0}
+  walkPointRange: 5
+  walkpoints: []
+  walkSpeed: 5
+  usePatrolPath: 0
+  canLoop: 1
+  timeBetweenAttacks: 1
+  passiveAttackTime: 1
+  aggressiveAttackTime: 0.5
+  timeBeingAggressive: 10
+  sightRange: 20
+  attackRange: 10
+  hearingRange: 30
+  fleeRange: 0
+  playerInSightRange: 0
+  playerInAttackRange: 0
+  soundInHearingRange: 0
+  playerInFleeRange: 0
+  InvestigatingSound: 0
+  isAggressive: 0
