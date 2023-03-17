@@ -14,6 +14,7 @@ public class AISpawner : MonoBehaviour
     void Start()
     {
         SpawnTankAI();
+        HealthManager.OnAIDeath += HandleAIDeath;
     }
 
     // Update is called once per frame
@@ -22,12 +23,31 @@ public class AISpawner : MonoBehaviour
 
     }
 
+    private void HandleAIDeath(GameObject aiGameObject )
+    { 
+    
+        AIController AI = aiGameObject.GetComponent<AIController>();
+        
+        if(AI)
+        {
+            if(AI.notifySpawnerToRespawn)
+            {
+                RespawnAI(AI);
+                HealthManager.OnAIDeath -= HandleAIDeath;
 
+            }
+        }
+    }
 
-
-    void SpawnTankAI()
+    void RespawnAI(AIController ai)
     {
+        
+        SpawnTankAI(ai);
+    }
 
+
+    void SpawnTankAI(AIController aiToSpawn = null)
+    {
         BoxCollider spawnBoxCollider = gameObject.GetComponent<BoxCollider>();
 
         // Get the dimensions of the box collider
@@ -37,21 +57,48 @@ public class AISpawner : MonoBehaviour
         Vector3 minPosition = spawnBoxCollider.bounds.min;
         Vector3 maxPosition = spawnBoxCollider.bounds.max;
 
-        // if we have a tank to spawn
-        if (enemyTanks.Length > 0)
+        if (aiToSpawn == null)
         {
+           
 
-            // Spawn random objects within the collider
-
-            for (int i = 0; i < enemiesToSpawn; i++)
+            // if we have a tank to spawn
+            if (enemyTanks.Length > 0)
             {
 
-                Vector3 randomPosition = new Vector3(Random.Range(minPosition.x, maxPosition.x),
-                                                     Random.Range(minPosition.y, maxPosition.y),
-                                                     Random.Range(minPosition.z, maxPosition.z));
+                // Spawn random objects within the collider
 
-                Instantiate(enemyTanks[Random.Range(0, enemyTanks.Length - 1)], randomPosition, Quaternion.identity);
+                for (int i = 0; i < enemiesToSpawn; i++)
+                {
+
+                    Vector3 randomPosition = new Vector3(Random.Range(minPosition.x, maxPosition.x),
+                                                         Random.Range(minPosition.y, maxPosition.y),
+                                                         Random.Range(minPosition.z, maxPosition.z));
+
+                    Instantiate(enemyTanks[Random.Range(0, enemyTanks.Length - 1)], randomPosition, Quaternion.identity);
+                }
             }
+        }
+       
+
+        if(aiToSpawn != null)
+        {
+           
+
+
+            Vector3 randomPosition = new Vector3(Random.Range(minPosition.x, maxPosition.x),
+                                                    Random.Range(minPosition.y, maxPosition.y),
+                                                    Random.Range(minPosition.z, maxPosition.z));
+
+           
+
+            AIController AI = Instantiate(aiToSpawn, randomPosition, Quaternion.identity);
+            HealthManager AIHealth = AI.GetComponent<HealthManager>();
+            if(AIHealth)
+            {
+                AIHealth.health = AIHealth.maxHealth;
+            }
+            HealthManager.OnAIDeath += HandleAIDeath;
+
         }
 
 

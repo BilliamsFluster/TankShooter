@@ -6,6 +6,8 @@ public class HealthManager : MonoBehaviour
 {
     public float health = 100f;
     public float maxHealth = 100f;
+    public delegate void AIDeathEventHandler(GameObject aiGameObject);
+    public static event AIDeathEventHandler OnAIDeath;
 
    public void TakeDamage(float dmg) // when we take damage 
     {
@@ -26,7 +28,21 @@ public class HealthManager : MonoBehaviour
 
     public void Death()
     {
-        Destroy(gameObject);
+        if(gameObject.tag == "Enemy")
+        {
+            if(OnAIDeath != null)
+            {
+                OnAIDeath(gameObject);
+            }
+            Destroy(gameObject);
+
+        }
+        else
+        {
+            Destroy(gameObject);
+
+        }
+
     }
 
 

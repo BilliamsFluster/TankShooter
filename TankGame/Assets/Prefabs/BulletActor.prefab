@@ -128,6 +128,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletLife: 3
-  bulletDamage: 5
+  bulletDamage: 20
   startLocation: {x: 0, y: 0, z: 0}
   hitLocation: {x: 0, y: 0, z: 0}
