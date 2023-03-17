@@ -10,6 +10,7 @@ public class AIController : Controller
     public GameObject player;
     private GameObject GunObj;
     public Gun gun;
+    public bool notifySpawnerToRespawn = false;
     Vector3 bulletSoundLocation = Vector3.zero;
 
     public LayerMask whatIsground, whatIsPlayer, whatIsSound, whatIsFLee;

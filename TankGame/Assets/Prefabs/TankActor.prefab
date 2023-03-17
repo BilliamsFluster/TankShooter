@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5717724028888183283}
   - component: {fileID: 8716352181165850198}
   - component: {fileID: 6850612102735301276}
-  - component: {fileID: 9064945955062905678}
+  - component: {fileID: 3614955558233637215}
   m_Layer: 7
   m_Name: TankObj
   m_TagString: Player
@@ -88,7 +88,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &9064945955062905678
+--- !u!114 &3614955558233637215
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
