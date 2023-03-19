@@ -816,7 +816,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AgentTypeID: 0
+  m_AgentTypeID: -1372625422
   m_CollectObjects: 0
   m_Size: {x: 10, y: 10, z: 10}
   m_Center: {x: 0, y: 2, z: 0}
@@ -830,7 +830,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
+  m_VoxelSize: 0.07
   m_BuildHeightMesh: 0
   m_NavMeshData: {fileID: 23800000, guid: 7374d9f858b5b32458a14ca826e8e25b, type: 2}
 --- !u!4 &991802947
@@ -883,24 +883,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1284417608 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 833617306580526745, guid: 75231ce5b2b834f49b0c21b167950976, type: 3}
-  m_PrefabInstance: {fileID: 1465423090}
-  m_PrefabAsset: {fileID: 0}
---- !u!65 &1284417611
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1284417608}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 10, y: 1, z: 10}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1406843119
 GameObject:
   m_ObjectHideFlags: 0
@@ -1102,7 +1084,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3461212322778106947, guid: 75231ce5b2b834f49b0c21b167950976, type: 3}
       propertyPath: enemyTanks.Array.size
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3461212322778106947, guid: 75231ce5b2b834f49b0c21b167950976, type: 3}
       propertyPath: enemyTanks.Array.data[0]
@@ -1111,11 +1093,15 @@ PrefabInstance:
     - target: {fileID: 3461212322778106947, guid: 75231ce5b2b834f49b0c21b167950976, type: 3}
       propertyPath: enemyTanks.Array.data[1]
       value: 
-      objectReference: {fileID: 7450548611579900751, guid: 0fa4d34e78986384cbc2bd83658f647d, type: 3}
+      objectReference: {fileID: -3276845553067329779, guid: 6ee807799518a9a409df544cc80771d4, type: 3}
     - target: {fileID: 3461212322778106947, guid: 75231ce5b2b834f49b0c21b167950976, type: 3}
       propertyPath: enemyTanks.Array.data[2]
       value: 
-      objectReference: {fileID: -3276845553067329779, guid: 6ee807799518a9a409df544cc80771d4, type: 3}
+      objectReference: {fileID: 7450548611579900751, guid: 0fa4d34e78986384cbc2bd83658f647d, type: 3}
+    - target: {fileID: 6064398174597461247, guid: 75231ce5b2b834f49b0c21b167950976, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9058853827977842275, guid: 75231ce5b2b834f49b0c21b167950976, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -1126,7 +1112,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9058853827977842275, guid: 75231ce5b2b834f49b0c21b167950976, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.91
+      value: 0.83
       objectReference: {fileID: 0}
     - target: {fileID: 9058853827977842275, guid: 75231ce5b2b834f49b0c21b167950976, type: 3}
       propertyPath: m_LocalPosition.z

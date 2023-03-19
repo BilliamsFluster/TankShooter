@@ -10,6 +10,7 @@ public class AIController : Controller
     public GameObject player;
     private GameObject GunObj;
     public Gun gun;
+    public bool showDebugSpheres = false;
     public bool notifySpawnerToRespawn = false;
     Vector3 bulletSoundLocation = Vector3.zero;
 
@@ -26,6 +27,7 @@ public class AIController : Controller
     int walkpointIndex = 0;
     public bool canLoop = true;
     protected bool fleeing = false;
+    
     
 
     //Attacking 
@@ -289,14 +291,18 @@ public class AIController : Controller
     // debug function
     private void OnDrawGizmos()
     {
-        
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, attackRange);
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, hearingRange);
+        if(showDebugSpheres)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, attackRange);
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(transform.position, hearingRange);
 
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, sightRange);
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireSphere(transform.position, sightRange);
+        }
+        
+       
     }
     
 }
