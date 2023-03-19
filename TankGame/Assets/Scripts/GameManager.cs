@@ -9,7 +9,6 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public GameObject playerController;
     public GameObject tank;
-    public Transform playerSpawnTransform;
     public List<TankController> players;
     public List<AIController> enemies;
 
@@ -63,14 +62,36 @@ public class GameManager : MonoBehaviour
 
     public void SpawnPlayer()
     {
-       GameObject newPlayerControllerObj =  Instantiate(playerController, playerSpawnTransform.position, Quaternion.identity);
-       newPawnObj = Instantiate(tank, playerSpawnTransform.position, Quaternion.identity);
+        BoxCollider spawnArea = GetComponent<BoxCollider>();
 
-       Controller newController = newPlayerControllerObj.GetComponent<Controller>();
-       
-       Pawn newPawn = newPawnObj.GetComponent<Pawn>();
+        if(spawnArea)
+        {
+            // Get the dimensions of the box collider
+            Vector3 boxSize = spawnArea.bounds.size;
 
-       newController.pawn = newPawn;
+            // Calculate the minimum and maximum positions within the collider
+            Vector3 minPosition = spawnArea.bounds.min;
+            Vector3 maxPosition = spawnArea.bounds.max;
+
+            Vector3 randomPosition = new Vector3(Random.Range(minPosition.x, maxPosition.x),
+                                                        Random.Range(minPosition.y, maxPosition.y),
+                                                        Random.Range(minPosition.z, maxPosition.z));
+
+
+            newPawnObj = Instantiate(tank, randomPosition, Quaternion.identity);
+            GameObject newPlayerControllerObj = Instantiate(playerController,newPawnObj.transform.position, Quaternion.identity);
+            
+
+            Controller newController = newPlayerControllerObj.GetComponent<Controller>();
+
+            Pawn newPawn = newPawnObj.GetComponent<Pawn>();
+
+            newController.pawn = newPawn;
+        }
+
+
+
+      
 
 
 

@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+
 
 public class MapGenerator : MonoBehaviour
 {
@@ -12,12 +14,16 @@ public class MapGenerator : MonoBehaviour
     public float roomWidth = 50;
     public float roomHeight = 50;
     private Room[,] grid;
+    public int mapSeed;
+    public bool mapOfTheDay;
 
 
 
     // Start is called before the first frame update
+    [Obsolete]
     void Start()
     {
+        
         GenerateMap();
     }
 
@@ -33,13 +39,29 @@ public class MapGenerator : MonoBehaviour
     /// <returns></returns>
     public GameObject RandomRoomPrefab()
     {
-        return gridPrefabs[Random.Range(0, gridPrefabs.Length)];
+        return gridPrefabs[UnityEngine.Random.Range(0, gridPrefabs.Length)];
+
     }
 
+    public int DateToInt(DateTime dateToUse)
+    {
+        return dateToUse.Year + dateToUse.Month + dateToUse.Day + dateToUse.Hour + dateToUse.Minute + dateToUse.Second + dateToUse.Millisecond;
+    }
+
+    [Obsolete]
     public void GenerateMap()
     {
         //clear out the grid
         grid = new Room[cols, rows];
+        if(!mapOfTheDay)
+        {
+            UnityEngine.Random.seed = mapSeed;
+        }
+        else
+        {
+            UnityEngine.Random.seed = DateToInt(DateTime.Now);
+        }
+        
 
         for(int currentRow = 0; currentRow < rows; currentRow++)
         {
