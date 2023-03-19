@@ -234,6 +234,7 @@ MonoBehaviour:
   agent: {fileID: -5600611684776780216}
   player: {fileID: 9119213372537678745, guid: c07baf6f0acda5248abac66bb8861bb2, type: 3}
   gun: {fileID: 0}
+  showDebugSpheres: 0
   notifySpawnerToRespawn: 0
   whatIsground:
     serializedVersion: 2

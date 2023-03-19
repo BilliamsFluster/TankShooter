@@ -87,7 +87,21 @@ public class MapGenerator : MonoBehaviour
                     tempRoom.doorNorth.SetActive(false);
                     tempRoom.doorSouth.SetActive(false);
                 }
+                if (currentCol == 0)
+                {
+                    tempRoom.doorEast.SetActive(false);
 
+                }
+
+                else if (currentCol == cols - 1)
+                {
+                    tempRoom.doorWest.SetActive(false);
+                }
+                else
+                {
+                    tempRoom.doorEast.SetActive(false);
+                    tempRoom.doorWest.SetActive(false);
+                }
 
                 #endregion Doors
 

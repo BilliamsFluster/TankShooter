@@ -46,6 +46,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridPrefabs:
   - {fileID: 121816, guid: 41d4243be8ad3a5409422171976de7ff, type: 3}
+  - {fileID: 121816, guid: ada113183c1f09f4f998c3f8df9a229a, type: 3}
+  - {fileID: 121816, guid: de4f6497d84b46a45b167ac9673c5da4, type: 3}
   rows: 5
   cols: 5
   roomWidth: 50

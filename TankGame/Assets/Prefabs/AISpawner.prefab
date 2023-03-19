@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9058853827977842275}
   - component: {fileID: 3461212322778106947}
+  - component: {fileID: 6064398174597461247}
   m_Layer: 0
   m_Name: AISpawner
   m_TagString: Untagged
@@ -44,4 +45,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e19981ac82da9f640aa57ecc345c18c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpawnArea: {x: 5, y: 3, z: 8}
+  enemyTanks: []
+  enemiesToSpawn: 0
+--- !u!65 &6064398174597461247
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 833617306580526745}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
