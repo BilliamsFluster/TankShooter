@@ -358,7 +358,19 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6135449872975323744, guid: 9dc11bec427d85b47ae3a41a78299f97, type: 3}
+      propertyPath: roomWidth
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 6135449872975323744, guid: 9dc11bec427d85b47ae3a41a78299f97, type: 3}
+      propertyPath: roomHeight
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 6135449872975323744, guid: 9dc11bec427d85b47ae3a41a78299f97, type: 3}
       propertyPath: mapOfTheDay
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6135449872975323744, guid: 9dc11bec427d85b47ae3a41a78299f97, type: 3}
+      propertyPath: randomLevel
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8477607760674443499, guid: 9dc11bec427d85b47ae3a41a78299f97, type: 3}

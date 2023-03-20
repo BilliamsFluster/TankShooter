@@ -123,6 +123,65 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &94815554
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 94815555}
+  - component: {fileID: 94815557}
+  - component: {fileID: 94815556}
+  m_Layer: 0
+  m_Name: Landmine
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &94815555
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 94815554}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.85, y: 0.34, z: -14.81}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &94815556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 94815554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2127335a6bb4d1b4c9347bbc28f403de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageAmt: 20
+--- !u!135 &94815557
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 94815554}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Center: {x: 1, y: 1, z: 1}
 --- !u!1 &268367464
 GameObject:
   m_ObjectHideFlags: 0
@@ -1038,7 +1097,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3461212322778106947, guid: 75231ce5b2b834f49b0c21b167950976, type: 3}
       propertyPath: enemyTanks.Array.size
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3461212322778106947, guid: 75231ce5b2b834f49b0c21b167950976, type: 3}
       propertyPath: enemyTanks.Array.data[0]
@@ -1242,6 +1301,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1853909533}
   - component: {fileID: 1853909534}
+  - component: {fileID: 1853909535}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -1257,7 +1317,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1853909531}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.16, y: -5.2392235, z: -16.255144}
+  m_LocalPosition: {x: -20.7, y: 2.76, z: -10.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1287,6 +1347,19 @@ MonoBehaviour:
   shotSource: {fileID: 0}
   shotSoundRange: 25
   impactSoundRange: 10
+--- !u!65 &1853909535
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1853909531}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 9.94, y: 1, z: 8.78}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1904292466
 GameObject:
   m_ObjectHideFlags: 0
@@ -1495,7 +1568,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 190235382313678820, guid: 71e0f1265537c324e98c2a4d6cb6404e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -18.1
+      value: 21.2
       objectReference: {fileID: 0}
     - target: {fileID: 190235382313678820, guid: 71e0f1265537c324e98c2a4d6cb6404e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1503,7 +1576,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 190235382313678820, guid: 71e0f1265537c324e98c2a4d6cb6404e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -14.06
+      value: 3.4
       objectReference: {fileID: 0}
     - target: {fileID: 190235382313678820, guid: 71e0f1265537c324e98c2a4d6cb6404e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1533,6 +1606,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 190235382313678821, guid: 71e0f1265537c324e98c2a4d6cb6404e, type: 3}
+      propertyPath: pickupPrefab
+      value: 
+      objectReference: {fileID: 5960887350383928461, guid: 2029646331cf75f4db36fce13c0c6eaa, type: 3}
     - target: {fileID: 190235382313678842, guid: 71e0f1265537c324e98c2a4d6cb6404e, type: 3}
       propertyPath: m_Name
       value: PickupSpawner
