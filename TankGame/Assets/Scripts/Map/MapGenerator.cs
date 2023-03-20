@@ -13,9 +13,10 @@ public class MapGenerator : MonoBehaviour
     public int cols;
     public float roomWidth = 50;
     public float roomHeight = 50;
-    private Room[,] grid;
+    public Room[,] grid;
     public int mapSeed;
     public bool mapOfTheDay;
+    public bool randomLevel;
 
 
 
@@ -59,11 +60,16 @@ public class MapGenerator : MonoBehaviour
         }
         else
         {
-            UnityEngine.Random.seed = DateToInt(DateTime.Now);
+            UnityEngine.Random.seed = DateToInt(DateTime.Today);
         }
-        
+        if(randomLevel)
+        {
+            UnityEngine.Random.seed = DateToInt(DateTime.Now);
 
-        for(int currentRow = 0; currentRow < rows; currentRow++)
+        }
+
+
+        for (int currentRow = 0; currentRow < rows; currentRow++)
         {
             for(int currentCol = 0; currentCol < cols; currentCol++)
             {
