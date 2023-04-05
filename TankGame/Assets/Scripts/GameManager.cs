@@ -15,6 +15,15 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public GameObject newPawnObj;
 
+    //Game States
+
+    public GameObject TitleSccreenStateObject;
+    public GameObject MainMenuStateObject;
+    public GameObject OptionsScreenStateObject;
+    public GameObject CreditsScreenStateObject;
+    public GameObject GameplayStateObject;
+    public GameObject GameOverScreenStateObject;
+
 
     /* Sounds */
     public AudioClip impactSound;
@@ -85,8 +94,13 @@ public class GameManager : MonoBehaviour
             Controller newController = newPlayerControllerObj.GetComponent<Controller>();
 
             Pawn newPawn = newPawnObj.GetComponent<Pawn>();
-
+            TankPawn tankPawn = tank.GetComponent<TankPawn>();
+            if(tankPawn !=null)
+            {
+                newPawn.tankController = newController;
+            }
             newController.pawn = newPawn;
+
         }
 
 
@@ -119,6 +133,52 @@ public class GameManager : MonoBehaviour
             Debug.Log(shotSound.ToString());
 
         }
+
+    }
+
+    private void DeactivateAllStates()
+    {
+        TitleSccreenStateObject.SetActive(false);
+        MainMenuStateObject.SetActive(false);
+        OptionsScreenStateObject.SetActive(false);
+        CreditsScreenStateObject.SetActive(false);
+        GameplayStateObject.SetActive(false);
+        GameOverScreenStateObject.SetActive(false);
+    }
+
+    public void ActivateTitleScreen()
+    {
+        DeactivateAllStates();
+        TitleSccreenStateObject.SetActive(true);
+    }
+    public void ActivateMainMenuScreen()
+    {
+        DeactivateAllStates();
+        MainMenuStateObject.SetActive(true);
+
+    }
+    public void ActivateOptionsScreen()
+    {
+        DeactivateAllStates();
+        OptionsScreenStateObject.SetActive(true);
+
+    }
+    public void ActivateCreditsScreen()
+    {
+        DeactivateAllStates();
+        CreditsScreenStateObject.SetActive(true);
+
+    }
+    public void ActivateGameplayStateObject()
+    {
+        DeactivateAllStates();
+        GameplayStateObject.SetActive(true);
+
+    }
+    public void ActivateGameOverScreen()
+    {
+        DeactivateAllStates();
+        GameOverScreenStateObject.SetActive(true);
 
     }
 
