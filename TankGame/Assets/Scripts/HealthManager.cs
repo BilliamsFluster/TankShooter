@@ -8,13 +8,16 @@ public class HealthManager : MonoBehaviour
     public float maxHealth = 100f;
     public delegate void AIDeathEventHandler(GameObject aiGameObject);
     public static event AIDeathEventHandler OnAIDeath;
+    public int deathScoreReward = 10;
 
-   public void TakeDamage(float dmg) // when we take damage 
+
+
+   public void TakeDamage(float dmg, GameObject instigator) // when we take damage 
     {
         if(health - dmg <=0)
         {
             health = 0;
-            Death();
+            Death(instigator);
             Debug.Log("Object Dead");
            
 
@@ -26,24 +29,42 @@ public class HealthManager : MonoBehaviour
         }
     }
 
-    public void Death()
+    public void Death(GameObject instigator)
     {
-        if(gameObject.tag == "Enemy")
+        if (instigator == null)
         {
-            if(OnAIDeath != null)
+            Debug.LogError("Instigator is null.");
+            return;
+        }
+
+        TankPawn tankPawn = instigator.GetComponent<TankPawn>();
+
+        if (tankPawn != null)
+        {
+            if (tankPawn.tankController != null)
+            {
+                tankPawn.tankController.AddScore(deathScoreReward);
+            }
+            else
+            {
+                Debug.LogError("TankController is null.");
+            }
+        }
+
+        if (gameObject.tag == "Enemy")
+        {
+            if (OnAIDeath != null)
             {
                 OnAIDeath(gameObject);
             }
             Destroy(gameObject);
-
         }
         else
         {
             Destroy(gameObject);
-
         }
-
     }
+
 
 
     public void Heal(float healthtoAdd)

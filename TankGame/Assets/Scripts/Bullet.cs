@@ -8,15 +8,20 @@ public class Bullet : MonoBehaviour
     /*variables */
     public float bulletLife = 3f;
     public float bulletDamage = 5f;
+
     
     [HideInInspector]
     public Vector3 startLocation;
 
     [HideInInspector]
     public Vector3 hitLocation;
-    
 
-    
+    [HideInInspector]
+    public GameObject bulletOwner;
+
+
+
+
     void Start()
     {
         GameManager.instance.PlayTankShotSound(); // play a shot sound
@@ -34,7 +39,6 @@ public class Bullet : MonoBehaviour
     void OnCollisionEnter(Collision other) // when we hit something
     {
         DealDamage(other.gameObject);
-        Debug.Log("Hit");
         BulletSoundEnabled();
         Invoke("BulletSoundDisabled", .1f);
         hitLocation = transform.position;
@@ -69,7 +73,8 @@ public class Bullet : MonoBehaviour
             var HealthManager = target.GetComponent<HealthManager>();
             if (HealthManager != null) // does the object have a health manager
             {
-                HealthManager.TakeDamage(bulletDamage); // if it does subtract its health
+                HealthManager.TakeDamage(bulletDamage,bulletOwner); // if it does subtract its health
+                
                 GameManager.instance.PlayTankImpactSound();
             }
             Destroy(gameObject);

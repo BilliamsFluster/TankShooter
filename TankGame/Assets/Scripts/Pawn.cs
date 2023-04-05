@@ -9,6 +9,7 @@ public abstract class Pawn : MonoBehaviour
     public Transform playerObj;
     public Rigidbody rigidBody;
     public float rotationSpeed;
+    public Controller tankController;
 
     // Start is called before the first frame update
     public virtual void Start()

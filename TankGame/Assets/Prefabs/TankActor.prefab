@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 5717724028888183283}
   - component: {fileID: 8716352181165850198}
   - component: {fileID: 6850612102735301276}
-  - component: {fileID: 3614955558233637215}
   m_Layer: 7
   m_Name: TankObj
   m_TagString: Player
@@ -88,22 +87,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &3614955558233637215
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4905193060321209161}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5168a04947833844afaf0c7765b9bd3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletSpawnPoint: {fileID: 9119213372925028628}
-  bulletPrefab: {fileID: 7418692315733629396, guid: c65f0647579b25641bd425ca0f054006, type: 3}
-  bulletSpeed: 50
-  coolDownTime: 1
 --- !u!1 &5728022245716184119
 GameObject:
   m_ObjectHideFlags: 0
@@ -239,6 +222,7 @@ GameObject:
   - component: {fileID: 7053860941462056620}
   - component: {fileID: 7890763074858860164}
   - component: {fileID: 776429973440921375}
+  - component: {fileID: 3480332774989152951}
   m_Layer: 7
   m_Name: TankActor
   m_TagString: Player
@@ -337,6 +321,7 @@ MonoBehaviour:
   rigidBody: {fileID: 9119213372537678746}
   rotationSpeed: 7
   fireKey: 32
+  tankController: {fileID: 0}
 --- !u!114 &7053860941462056620
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -351,6 +336,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   maxHealth: 100
+  deathScoreReward: 0
 --- !u!114 &7890763074858860164
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -364,6 +350,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pawn: {fileID: 0}
+  TankScore: 0
 --- !u!114 &776429973440921375
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -376,6 +363,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04d085e5842bc8b4a9153cf1d03b4793, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3480332774989152951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9119213372537678745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5168a04947833844afaf0c7765b9bd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletSpawnPoint: {fileID: 9119213372925028628}
+  bulletPrefab: {fileID: 7418692315733629396, guid: c65f0647579b25641bd425ca0f054006, type: 3}
+  bulletSpeed: 50
+  coolDownTime: 1
 --- !u!1 &9119213372925028635
 GameObject:
   m_ObjectHideFlags: 0

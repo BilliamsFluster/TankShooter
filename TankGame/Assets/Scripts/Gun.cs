@@ -37,8 +37,11 @@ public class Gun : MonoBehaviour
             }
             lastShot = Time.time; // reset the timer
         }
-        var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation); // spawn bullet
+        GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation); // spawn bullet
         bullet.GetComponent<Rigidbody>().AddForce(bulletSpawnPoint.forward * bulletSpeed, ForceMode.Impulse); // add force to the bullet to update its position.
+        Bullet bulletObj = bullet.GetComponent<Bullet>();
+        bulletObj.bulletOwner = gameObject;
+
         
 
         

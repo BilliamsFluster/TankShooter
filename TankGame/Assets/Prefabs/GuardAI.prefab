@@ -160,6 +160,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 55
   maxHealth: 100
+  deathScoreReward: 50
 --- !u!54 &8577108393164384049
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -234,6 +235,8 @@ MonoBehaviour:
   agent: {fileID: -5600611684776780216}
   player: {fileID: 9119213372537678745, guid: c07baf6f0acda5248abac66bb8861bb2, type: 3}
   gun: {fileID: 0}
+  showDebugSpheres: 0
+  notifySpawnerToRespawn: 0
   whatIsground:
     serializedVersion: 2
     m_Bits: 64

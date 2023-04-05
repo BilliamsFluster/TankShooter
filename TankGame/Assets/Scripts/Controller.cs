@@ -8,12 +8,15 @@ public abstract class Controller : MonoBehaviour
 {
     [HideInInspector]
     public Pawn pawn;
-    //public AudioClip impactSound;
-    //public AudioClip shotSound;
-    //public static AudioSource impactSource;
-    //public static AudioSource shotSource;
-    
-    // Start is called before the first frame update
+   
+    public int TankScore = 0;
+
+    public void AddScore(int score)
+    {
+        TankScore += score;
+    }
+
+   
     protected virtual void Start()
     {
         
