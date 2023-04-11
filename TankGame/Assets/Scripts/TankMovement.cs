@@ -15,6 +15,10 @@ public class TankMovement : MonoBehaviour
     public string detectedObjectForRotationMod;
     public LayerMask collisionFilter;
     float speedFact = 0;
+    [SerializeField] private string inputHorizontal;
+    [SerializeField] private string inputVertical;
+
+
 
 
     public float groundDrag;
@@ -107,8 +111,8 @@ public class TankMovement : MonoBehaviour
     }
     private void PlayerInput()
     {
-        horizontalInput = Input.GetAxis("Horizontal");
-        verticalInput = Input.GetAxis("Vertical");
+        horizontalInput = Input.GetAxis(inputHorizontal);
+        verticalInput = Input.GetAxis(inputVertical);
     }
 
     private void MovePlayer()

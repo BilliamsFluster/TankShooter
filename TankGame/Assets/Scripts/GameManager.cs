@@ -7,8 +7,13 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
 
     public static GameManager instance;
-    public GameObject playerController;
-    public GameObject tank;
+    //public GameObject player1Controller;
+    //public GameObject player1Tank;
+    //public GameObject player2Controller;
+    //public GameObject player2Tank;
+    public List<GameObject> playerControllers;
+    public List<GameObject> playerTanks;
+
     public List<TankController> players;
     public List<AIController> enemies;
 
@@ -60,7 +65,7 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
-        SpawnPlayer();
+        SpawnPlayers();
     }
 
     // Update is called once per frame
@@ -69,39 +74,42 @@ public class GameManager : MonoBehaviour
         
     }
 
-    public void SpawnPlayer()
+    public void SpawnPlayers()
     {
         BoxCollider spawnArea = GetComponent<BoxCollider>();
-
-        if(spawnArea)
+        for(int i = 0; i < playerTanks.Count ; i ++)
         {
-            // Get the dimensions of the box collider
-            Vector3 boxSize = spawnArea.bounds.size;
-
-            // Calculate the minimum and maximum positions within the collider
-            Vector3 minPosition = spawnArea.bounds.min;
-            Vector3 maxPosition = spawnArea.bounds.max;
-
-            Vector3 randomPosition = new Vector3(Random.Range(minPosition.x, maxPosition.x),
-                                                        Random.Range(minPosition.y, maxPosition.y),
-                                                        Random.Range(minPosition.z, maxPosition.z));
-
-
-            newPawnObj = Instantiate(tank, randomPosition, Quaternion.identity);
-            GameObject newPlayerControllerObj = Instantiate(playerController,newPawnObj.transform.position, Quaternion.identity);
-            
-
-            Controller newController = newPlayerControllerObj.GetComponent<Controller>();
-
-            Pawn newPawn = newPawnObj.GetComponent<Pawn>();
-            TankPawn tankPawn = tank.GetComponent<TankPawn>();
-            if(tankPawn !=null)
+            if (spawnArea)
             {
-                newPawn.tankController = newController;
-            }
-            newController.pawn = newPawn;
+                // Get the dimensions of the box collider
+                Vector3 boxSize = spawnArea.bounds.size;
 
+                // Calculate the minimum and maximum positions within the collider
+                Vector3 minPosition = spawnArea.bounds.min;
+                Vector3 maxPosition = spawnArea.bounds.max;
+
+                Vector3 randomPosition = new Vector3(Random.Range(minPosition.x, maxPosition.x),
+                                                            Random.Range(minPosition.y, maxPosition.y),
+                                                            Random.Range(minPosition.z, maxPosition.z));
+
+
+                newPawnObj = Instantiate(playerTanks[i], randomPosition, Quaternion.identity);
+                GameObject newPlayerControllerObj = Instantiate(playerControllers[i], newPawnObj.transform.position, Quaternion.identity);
+
+
+                Controller newController = newPlayerControllerObj.GetComponent<Controller>();
+
+                Pawn newPawn = newPawnObj.GetComponent<Pawn>();
+                TankPawn tankPawn = playerTanks[i].GetComponent<TankPawn>();
+                if (tankPawn != null)
+                {
+                    newPawn.tankController = newController;
+                }
+                newController.pawn = newPawn;
+
+            }
         }
+        
 
 
 
