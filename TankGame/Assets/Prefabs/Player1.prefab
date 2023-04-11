@@ -142,7 +142,7 @@ Camera:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1
+    width: 0.5
     height: 1
   near clip plane: 0.1
   far clip plane: 5000
@@ -224,7 +224,7 @@ GameObject:
   - component: {fileID: 776429973440921375}
   - component: {fileID: 3480332774989152951}
   m_Layer: 7
-  m_Name: TankActor
+  m_Name: Player1
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -297,6 +297,8 @@ MonoBehaviour:
   collisionFilter:
     serializedVersion: 2
     m_Bits: 512
+  inputHorizontal: Player1Horizontal
+  inputVertical: Player1Vertical
   groundDrag: 5
   playerHeight: 1
   whatIsGround:
@@ -320,8 +322,8 @@ MonoBehaviour:
   playerObj: {fileID: 5717724028888183283}
   rigidBody: {fileID: 9119213372537678746}
   rotationSpeed: 7
-  fireKey: 32
   tankController: {fileID: 0}
+  fireKey: 32
 --- !u!114 &7053860941462056620
 MonoBehaviour:
   m_ObjectHideFlags: 0
