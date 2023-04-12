@@ -1,18 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     // Start is called before the first frame update
 
     public static GameManager instance;
-    //public GameObject player1Controller;
-    //public GameObject player1Tank;
-    //public GameObject player2Controller;
-    //public GameObject player2Tank;
     public List<GameObject> playerControllers;
     public List<GameObject> playerTanks;
+    public bool mapOfTheDay = false, randomLevel = false;
+    public int rows = 5, cols = 5, mapSeed = 0;
 
     public List<TankController> players;
     public List<AIController> enemies;
@@ -28,6 +27,8 @@ public class GameManager : MonoBehaviour
     public GameObject CreditsScreenStateObject;
     public GameObject GameplayStateObject;
     public GameObject GameOverScreenStateObject;
+
+    
 
 
     /* Sounds */
@@ -65,7 +66,16 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
-        SpawnPlayers();
+        if(SceneManager.GetActiveScene().name != "Level")
+        {
+          ActivateMainMenuScreen();
+
+        }
+        else
+        {
+            SpawnPlayers();
+
+        }
     }
 
     // Update is called once per frame
@@ -190,4 +200,35 @@ public class GameManager : MonoBehaviour
 
     }
 
+    public void QuitApp()
+    {
+        Application.Quit();
+        Debug.Log("Quit App");
+    }
+    public void OnMapOfTheDayChanged(bool val)
+    {
+        mapOfTheDay = val;
+    }
+    public void OnRandomLevelChanged(bool val)
+    {
+        randomLevel = val;
+    }
+    public void ChangeMapSeed(string val)
+    {
+        mapSeed = int.Parse(val);
+    }
+
+    public void ChangeRows(string val)
+    {
+        rows = int.Parse(val);
+    }
+    public void ChangeCols(string val)
+    {
+        cols = int.Parse(val);
+    }
+
+    public void OpenLevel()
+    {
+        SceneManager.LoadScene("Level");
+    }
 }

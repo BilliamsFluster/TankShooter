@@ -26,8 +26,15 @@ public class MapGenerator : MonoBehaviour
     {
         
         GenerateMap();
+        rows = GameManager.instance.rows;
+        cols = GameManager.instance.cols;
+        mapSeed = GameManager.instance.mapSeed;
+        mapOfTheDay = GameManager.instance.mapOfTheDay;
+        randomLevel = GameManager.instance.randomLevel;
+        GameManager.instance.SpawnPlayers();
     }
 
+   
     // Update is called once per frame
     void Update()
     {
