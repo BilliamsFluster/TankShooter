@@ -355,11 +355,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6135449872975323744, guid: 9dc11bec427d85b47ae3a41a78299f97, type: 3}
       propertyPath: cols
-      value: 1
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6135449872975323744, guid: 9dc11bec427d85b47ae3a41a78299f97, type: 3}
       propertyPath: rows
-      value: 1
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6135449872975323744, guid: 9dc11bec427d85b47ae3a41a78299f97, type: 3}
       propertyPath: mapSeed

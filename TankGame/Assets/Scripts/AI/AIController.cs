@@ -7,12 +7,14 @@ public class AIController : Controller
 {
     public NavMeshAgent agent;
 
+    [HideInInspector]
     public GameObject player;
     private GameObject GunObj;
     public Gun gun;
     public bool showDebugSpheres = false;
     public bool notifySpawnerToRespawn = false;
     Vector3 bulletSoundLocation = Vector3.zero;
+    
 
     public LayerMask whatIsground, whatIsPlayer, whatIsSound, whatIsFLee;
 
@@ -128,10 +130,21 @@ public class AIController : Controller
 
     protected void ChasePlayer()
     {
-        if(player != null)
+        Collider[] colliders = Physics.OverlapSphere(transform.position, hearingRange); // get all colliders within sphere
+        foreach (Collider collider in colliders)
         {
-            agent.SetDestination(player.transform.position); // set destination to player location
+            if (collider.gameObject.tag == "Player")
+            {
+
+                player = collider.gameObject; // cast the current hit collider game object to the bullet
+                if (player != null)
+                {
+                    agent.SetDestination(player.transform.position); // set destination to player location
+                }
+                break;
+            }
         }
+       
         
         
     }
@@ -142,8 +155,22 @@ public class AIController : Controller
         //enemy doesnt move
         agent.SetDestination(transform.position);
         InvestigatingSound = false;
+        Collider[] colliders = Physics.OverlapSphere(transform.position, attackRange); // get all colliders within sphere
+        foreach (Collider collider in colliders)
+        {
+            if (collider.gameObject.tag == "Player")
+            {
 
-        transform.LookAt(player.transform.position);
+                player = collider.gameObject; // cast the current hit collider game object to the bullet
+                if (player != null)
+                {
+                    transform.LookAt(player.transform.position);
+
+                }
+                break;
+            }
+        }
+       
         if(!alreadyAttacked)
         {
            if(gun != null)
@@ -169,7 +196,9 @@ public class AIController : Controller
     protected override void Start()
     {
         Invoke(nameof(UpdateComponents), 1f);
-
+        
+        
+        
         passiveAttackTime = 1f;
         aggressiveAttackTime = 0.5f;
         timeBeingAggressive = 6f;
