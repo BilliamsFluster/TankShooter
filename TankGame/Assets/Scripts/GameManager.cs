@@ -10,9 +10,10 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public List<GameObject> playerControllers;
     public List<GameObject> playerTanks;
+    public int numberOfPlayers = 1;
     public bool mapOfTheDay = false, randomLevel = false;
     public int rows = 5, cols = 5, mapSeed = 0;
-
+    public bool multiplayer = false;
     public List<TankController> players;
     public List<AIController> enemies;
 
@@ -69,7 +70,7 @@ public class GameManager : MonoBehaviour
         if(SceneManager.GetActiveScene().name != "Level")
         {
           ActivateMainMenuScreen();
-
+          ToggleMultiplayer(multiplayer);
         }
         else
         {
@@ -87,7 +88,7 @@ public class GameManager : MonoBehaviour
     public void SpawnPlayers()
     {
         BoxCollider spawnArea = GetComponent<BoxCollider>();
-        for(int i = 0; i < playerTanks.Count ; i ++)
+        for(int i = 0; i < numberOfPlayers ; i ++)
         {
             if (spawnArea)
             {
@@ -212,6 +213,28 @@ public class GameManager : MonoBehaviour
     public void OnRandomLevelChanged(bool val)
     {
         randomLevel = val;
+    }
+
+    
+    public void ToggleMultiplayer(bool val)
+    {
+        multiplayer = val;
+        if(multiplayer)
+        {
+            numberOfPlayers = 2;
+            Camera player1Camera = playerTanks[0].GetComponentInChildren<Camera>();
+            Rect viewportRect = player1Camera.rect;
+            viewportRect.width = 0.5f;
+            player1Camera.rect = viewportRect;
+        }
+        else
+        {
+            numberOfPlayers = 1;
+            Camera player1Camera = playerTanks[0].GetComponentInChildren<Camera>();
+            Rect viewportRect = player1Camera.rect;
+            viewportRect.width = 1;
+            player1Camera.rect = viewportRect; // set the updated viewportRect to player1Camera
+        }
     }
     public void ChangeMapSeed(string val)
     {
