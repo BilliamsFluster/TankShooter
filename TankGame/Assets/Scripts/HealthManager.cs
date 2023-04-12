@@ -9,10 +9,11 @@ public class HealthManager : MonoBehaviour
     public delegate void AIDeathEventHandler(GameObject aiGameObject);
     public static event AIDeathEventHandler OnAIDeath;
     public int deathScoreReward = 10;
+    [SerializeField] HealthBar healthBar;
 
 
 
-   public void TakeDamage(float dmg, GameObject instigator) // when we take damage 
+    public void TakeDamage(float dmg, GameObject instigator) // when we take damage 
     {
         if(health - dmg <=0)
         {
@@ -27,6 +28,7 @@ public class HealthManager : MonoBehaviour
             health -= dmg;
             Debug.Log("Taken damage");
         }
+        healthBar.UpdateHealthBar(health, maxHealth);
     }
 
     public void Death(GameObject instigator)
@@ -50,6 +52,7 @@ public class HealthManager : MonoBehaviour
                 Debug.LogError("TankController is null.");
             }
         }
+        healthBar.UpdateHealthBar(health, maxHealth);
 
         if (gameObject.tag == "Enemy")
         {
@@ -65,8 +68,10 @@ public class HealthManager : MonoBehaviour
         }
     }
 
-
-
+    void Start()
+    {
+        healthBar.UpdateHealthBar(health, maxHealth);
+    }
     public void Heal(float healthtoAdd)
     {
         if (health + healthtoAdd >= maxHealth)
@@ -77,5 +82,6 @@ public class HealthManager : MonoBehaviour
         {
             health += healthtoAdd;
         }
+        healthBar.UpdateHealthBar(health, maxHealth);
     }
 }
