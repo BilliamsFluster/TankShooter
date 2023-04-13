@@ -161,7 +161,7 @@ public class AIController : Controller
             if (collider.gameObject.tag == "Player")
             {
 
-                player = collider.gameObject; // cast the current hit collider game object to the bullet
+                GameObject player = collider.gameObject; // cast the current hit collider game object to the bullet
                 if (player != null)
                 {
                     transform.LookAt(player.transform.position);
@@ -218,7 +218,7 @@ public class AIController : Controller
             {
                 GameManager.instance.enemies.Add(this); // add ai controller to list
             }
-            player = GameManager.instance.newPawnObj;
+           // player = GameManager.instance.newPawnObj;
             gun = GetComponent<Gun>();
 
         }

@@ -59,8 +59,24 @@ public class ScaredAI : AIController
             //enemy doesnt move
             agent.SetDestination(transform.position);
             InvestigatingSound = false;
+            InvestigatingSound = false;
+            Collider[] colliders = Physics.OverlapSphere(transform.position, attackRange);
+            foreach (Collider collider in colliders)
+            {
+                if (collider.gameObject.tag == "Player")
+                {
 
-            transform.LookAt(player.transform.position);
+                    GameObject player = collider.gameObject; // cast the current hit collider game object to the bullet
+                    if (player != null)
+                    {
+                        transform.LookAt(player.transform.position);
+
+                    }
+                    break;
+                }
+            }
+
+            
             if (!alreadyAttacked)
             {
                 if (gun != null)

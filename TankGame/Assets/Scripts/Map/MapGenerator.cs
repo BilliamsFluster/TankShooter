@@ -31,7 +31,8 @@ public class MapGenerator : MonoBehaviour
         mapSeed = GameManager.instance.mapSeed;
         mapOfTheDay = GameManager.instance.mapOfTheDay;
         randomLevel = GameManager.instance.randomLevel;
-        GameManager.instance.SpawnPlayers();
+        StartCoroutine(GameManager.instance.SpawnPlayersCoroutine());
+        
     }
 
    

@@ -84,7 +84,11 @@ public class PowerupManager : MonoBehaviour
     {
         foreach (Powerup powerup in removedPowerupsQue)
         {
-            powerups.Remove(powerup);
+            if(powerup != null)
+            {
+                powerups.Remove(powerup);
+
+            }
         }
     }
 

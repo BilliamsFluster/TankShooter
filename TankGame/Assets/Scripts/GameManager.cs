@@ -15,10 +15,12 @@ public class GameManager : MonoBehaviour
     public int rows = 5, cols = 5, mapSeed = 0;
     public bool multiplayer = false;
     public List<TankController> players;
-    public List<AIController> enemies;
+    public List<TankPawn> TankPlayers;
 
+    public List<AIController> enemies;
     [HideInInspector]
-    public GameObject newPawnObj;
+    public bool gameOver;
+
 
     //Game States
 
@@ -28,6 +30,7 @@ public class GameManager : MonoBehaviour
     public GameObject CreditsScreenStateObject;
     public GameObject GameplayStateObject;
     public GameObject GameOverScreenStateObject;
+    private GameObject GameOverScreen;
 
     
 
@@ -54,6 +57,7 @@ public class GameManager : MonoBehaviour
         }
 
         players = new List<TankController>();
+        TankPlayers = new List<TankPawn>();
         enemies = new List<AIController>();
 
         //sounds
@@ -72,11 +76,6 @@ public class GameManager : MonoBehaviour
           ActivateMainMenuScreen();
           ToggleMultiplayer(multiplayer);
         }
-        else
-        {
-            SpawnPlayers();
-
-        }
     }
 
     // Update is called once per frame
@@ -85,10 +84,12 @@ public class GameManager : MonoBehaviour
         
     }
 
-    public void SpawnPlayers()
+    public IEnumerator SpawnPlayersCoroutine()
     {
+        GameOverScreen = GameObject.Find("GameOverScreen1");
+        GameOverScreen.SetActive(false);
         BoxCollider spawnArea = GetComponent<BoxCollider>();
-        for(int i = 0; i < numberOfPlayers ; i ++)
+        for (int i = 0; i < numberOfPlayers; i++)
         {
             if (spawnArea)
             {
@@ -104,30 +105,80 @@ public class GameManager : MonoBehaviour
                                                             Random.Range(minPosition.z, maxPosition.z));
 
 
-                newPawnObj = Instantiate(playerTanks[i], randomPosition, Quaternion.identity);
+                GameObject newPawnObj = Instantiate(playerTanks[i], randomPosition, Quaternion.identity);
                 GameObject newPlayerControllerObj = Instantiate(playerControllers[i], newPawnObj.transform.position, Quaternion.identity);
 
 
                 Controller newController = newPlayerControllerObj.GetComponent<Controller>();
 
                 Pawn newPawn = newPawnObj.GetComponent<Pawn>();
-                TankPawn tankPawn = playerTanks[i].GetComponent<TankPawn>();
-                if (tankPawn != null)
-                {
-                    newPawn.tankController = newController;
-                }
-                newController.pawn = newPawn;
 
+                // Wait for a short amount of time to allow the new objects to initialize
+                yield return new WaitForSeconds(0.1f);
+
+                // Make sure that the new objects have not been destroyed
+                if (newPawn != null && newPlayerControllerObj != null)
+                {
+                    newController.pawn = newPawn;
+
+                    TankPlayers[i].tankController = newController;
+                    TankPlayers[i].tankController.name = "PlayerController" + (i+1);
+
+                    players[i].pawn = newPawn;
+                        
+                    
+                }
             }
         }
-        
+    }
 
 
 
-      
+
+    public void SpawnPlayers()
+    {
+        GameOverScreen = GameObject.Find("GameOverScreen1");
+        GameOverScreen.SetActive(false);
+        BoxCollider spawnArea = GetComponent<BoxCollider>();
+        for (int i = 0; i < numberOfPlayers; i++)
+        {
+            if (spawnArea)
+            {
+                // Get the dimensions of the box collider
+                Vector3 boxSize = spawnArea.bounds.size;
+
+                // Calculate the minimum and maximum positions within the collider
+                Vector3 minPosition = spawnArea.bounds.min;
+                Vector3 maxPosition = spawnArea.bounds.max;
+
+                Vector3 randomPosition = new Vector3(Random.Range(minPosition.x, maxPosition.x),
+                                                            Random.Range(minPosition.y, maxPosition.y),
+                                                            Random.Range(minPosition.z, maxPosition.z));
 
 
+                GameObject newPawnObj = Instantiate(playerTanks[i], randomPosition, Quaternion.identity);
+                GameObject newPlayerControllerObj = Instantiate(playerControllers[i], newPawnObj.transform.position, Quaternion.identity);
 
+
+                Controller newController = newPlayerControllerObj.GetComponent<Controller>();
+
+                Pawn newPawn = newPawnObj.GetComponent<Pawn>();
+
+                // Wait for a short amount of time to allow the new objects to initialize
+                
+
+                // Make sure that the new objects have not been destroyed
+                if (newPawn != null && newPlayerControllerObj != null)
+                {
+                    newController.pawn = newPawn;
+
+                    TankPlayers[i].tankController = newController;
+                    players[i].pawn = newPawn;
+
+
+                }
+            }
+        }
     }
 
 
@@ -155,57 +206,15 @@ public class GameManager : MonoBehaviour
 
     }
 
-    private void DeactivateAllStates()
-    {
-        TitleSccreenStateObject.SetActive(false);
-        MainMenuStateObject.SetActive(false);
-        OptionsScreenStateObject.SetActive(false);
-        CreditsScreenStateObject.SetActive(false);
-        GameplayStateObject.SetActive(false);
-        GameOverScreenStateObject.SetActive(false);
-    }
-
-    public void ActivateTitleScreen()
-    {
-        DeactivateAllStates();
-        TitleSccreenStateObject.SetActive(true);
-    }
     public void ActivateMainMenuScreen()
     {
-        DeactivateAllStates();
+        
         MainMenuStateObject.SetActive(true);
-
-    }
-    public void ActivateOptionsScreen()
-    {
-        DeactivateAllStates();
-        OptionsScreenStateObject.SetActive(true);
-
-    }
-    public void ActivateCreditsScreen()
-    {
-        DeactivateAllStates();
-        CreditsScreenStateObject.SetActive(true);
-
-    }
-    public void ActivateGameplayStateObject()
-    {
-        DeactivateAllStates();
-        GameplayStateObject.SetActive(true);
-
-    }
-    public void ActivateGameOverScreen()
-    {
-        DeactivateAllStates();
-        GameOverScreenStateObject.SetActive(true);
+        gameOver = false;
 
     }
 
-    public void QuitApp()
-    {
-        Application.Quit();
-        Debug.Log("Quit App");
-    }
+
     public void OnMapOfTheDayChanged(bool val)
     {
         mapOfTheDay = val;
@@ -250,8 +259,37 @@ public class GameManager : MonoBehaviour
         cols = int.Parse(val);
     }
 
+   
+    public void Restart()
+    {
+        if(SceneManager.GetActiveScene().name == "Level")
+        {
+            OpenLevel();
+            
+        }
+    }
+
     public void OpenLevel()
     {
         SceneManager.LoadScene("Level");
     }
+    public void GoToMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+
+
+        
+
+    }
+    public void ActivateGameOverScreen()
+    {
+
+        GameOverScreen.SetActive(true);
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        gameOver = true;
+
+    }
+
+
 }
