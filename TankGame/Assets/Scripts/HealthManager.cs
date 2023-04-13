@@ -20,7 +20,6 @@ public class HealthManager : MonoBehaviour
             health = 0;
             Death(instigator);
             Debug.Log("Object Dead");
-           
 
         }
         else
@@ -47,10 +46,7 @@ public class HealthManager : MonoBehaviour
             {
                 tankPawn.tankController.AddScore(deathScoreReward);
             }
-            else
-            {
-                Debug.LogError("TankController is null.");
-            }
+            
         }
         healthBar.UpdateHealthBar(health, maxHealth);
 
@@ -64,6 +60,7 @@ public class HealthManager : MonoBehaviour
         }
         else
         {
+            GameManager.instance.ActivateGameOverScreen();
             Destroy(gameObject);
         }
     }

@@ -15,6 +15,7 @@ public class TankPawn : Pawn
         base.Start();
         
         gun = gameObject.GetComponent<Gun>();
+        GameManager.instance.TankPlayers.Add(this);
     }
 
     // Update is called once per frame
